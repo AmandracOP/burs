@@ -1,4 +1,10 @@
-import team from './team'
-import events from './events'
-import gallery from './gallery'
-export const schemaTypes = [team, events, gallery]
+// index.ts
+
+import team from './team';
+import events from './events';
+import gallery from './gallery';
+import { SanityDocument, Category, Event, GalleryImage, TeamMember } from './interfaces';
+
+export const schemaTypes = [team, events, gallery] as Sanity.SchemaType[];
+
+export type { Category, Event, GalleryImage, TeamMember } from './interfaces'

@@ -1,4 +1,4 @@
-import { defineField, defineType} from 'sanity';
+import { defineField, defineType } from 'sanity';
 
 export default defineType({
   name: 'event',
@@ -24,25 +24,17 @@ export default defineType({
       options: { source: 'name' },
       validation: (Rule) => Rule.required(),
     }),
-    defineField({
+    {
       name: 'gallery',
       title: 'Gallery',
       type: 'array',
       of: [
         {
           type: 'image',
-          fields: [
-            defineField({
-              name: 'hotspot',
-              type: 'hotspot',
-              options: {
-                hotspot: true,
-              },
-            }),
-          ],
+          validation: (Rule) => Rule.required(),
         },
       ],
-    }),
+    },
     defineField({
       name: 'description',
       title: 'Description',

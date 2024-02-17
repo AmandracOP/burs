@@ -9,22 +9,14 @@ export default defineType({
       name: 'image',
       title: 'Image',
       type: 'image',
-      fields: [
-        {
-          name: 'hotspot',
-          type: 'hotspot',
-          options: {
-            hotspot: true,
-          },
-        },
-        {
-          name: 'alternateText',
-          title: 'Alternate Text',
-          type: 'string',
-        },
-      ],
+      validation: (Rule) => Rule.required(),
     },
-    {
+    defineField({
+      name: 'alternateText',
+      title: 'Alternate Text',
+      type: 'string',
+    }),
+    defineField({
       name: 'quote',
       title: 'Quote',
       type: 'string',
@@ -32,6 +24,6 @@ export default defineType({
         rows: 4,
         columns: 20,
       },
-    },
+    }),
   ],
 });
