@@ -10,11 +10,12 @@ export const fetchFirstDocument = groq`
 // query for fetching events
 export const fetchEvents = groq`
   *[_type == "event"] {
-    _id,
+    
     name,
     title,
-    slug,
+    "slug":slug.current,
     gallery,
+    "imageUrl": gallery[0].asset->url,
     description
   }
 `;
@@ -22,7 +23,7 @@ export const fetchEvents = groq`
 // query for fetching team members
 export const fetchTeamMembers = groq`
   *[_type == "team"] {
-    _id,
+    
     name,
     designation,
     category,
@@ -34,7 +35,7 @@ export const fetchTeamMembers = groq`
 // query for fetching categories
 export const fetchCategories = groq`
   *[_type == "category"] {
-    _id,
+    
     title,
     description
   }
@@ -43,7 +44,7 @@ export const fetchCategories = groq`
 //query for finding documents with a specific term in their content
 export const findDocumentsByTerm = (term: string) => groq`
   *[_type == "event" || _type == "team" || _type == "category"][score(content, ${term}) > 0] {
-    _id,
+    
     _type,
     title,
     score
@@ -51,13 +52,10 @@ export const findDocumentsByTerm = (term: string) => groq`
 `;
 // query for fetching paginated events
 export const fetchPaginatedEvents = (page: number, pageSize: number, term?: string) => {
-  const skipCount = (page - 1) * pageSize;
-
-  const query = groq`
+  let query = groq`
     {
       "total": count(*[_type == "event"]),
-      "events": *[_type == "event"][${skipCount}...${pageSize + skipCount - 1}] | order(publishedAt desc) {
-        _id,
+      "events": *[_type == "event"][${(page - 1) * pageSize}...${page * pageSize - 1}] | order(publishedAt desc) {
         name,
         title,
         slug,
@@ -68,13 +66,11 @@ export const fetchPaginatedEvents = (page: number, pageSize: number, term?: stri
   `;
 
   if (term) {
-    query += `,
-    "searchResults": *[_type == "event" || _type == "team" || _type == "category"][score(content, ${term}) > 0] {
-      _id,
+    query += `, "searchResults": *[_type == "event" || _type == "team" || _type == "category"][score(content, ${term}) > 0] {
       _type,
       title,
       score
-    }`;
+    } | order(_score desc)`;
   }
 
   return query;

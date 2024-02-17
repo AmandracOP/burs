@@ -5,30 +5,30 @@ export default defineType({
   title: 'Team',
   type: 'document',
   fields: [
-    defineField({
+    {
       name: 'name',
       title: 'Name',
       type: 'string',
       validation: (Rule) => Rule.required(),
-    }),
-    defineField({
+    },
+    {
       name: 'designation',
       title: 'Designation',
       type: 'string',
       validation: (Rule) => Rule.required(),
-    }),
-    defineField({
+    },
+    {
       name: 'category',
       title: 'Category',
       type: 'string',
-    }),
-    defineField({
+    },
+    {
       name: 'image',
       title: 'Image',
       type: 'image',
       validation: (Rule) => Rule.required(),
-    }),
-    defineField({
+    },
+    {
       name: 'socials',
       title: 'Socials',
       type: 'array',
@@ -36,7 +36,7 @@ export default defineType({
         {
           type: 'object',
           fields: [
-            defineField({
+            {
               name: 'platform',
               title: 'Platform',
               type: 'string',
@@ -51,7 +51,7 @@ export default defineType({
                 ],
               },
               validation: (Rule) => Rule.required(),
-            }),
+            },
             {
               name: 'url',
               title: 'URL',
@@ -61,6 +61,6 @@ export default defineType({
           ],
         },
       ],
-    }),
+    },
   ],
 });
