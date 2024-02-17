@@ -10,7 +10,7 @@ export default defineConfig({
   projectId: 't58icfcc',
   dataset: 'cms',
 
-  plugins: [structureTool(), visionTool()],
+  plugins: [structureTool(), visionTool(),medialibrary()],
 
   schema: {
     types: schemaTypes,

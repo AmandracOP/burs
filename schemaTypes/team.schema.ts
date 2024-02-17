@@ -1,6 +1,6 @@
-import { defineField, defineType } from 'sanity';
+import { SchemaTypeDefinition } from 'sanity';
 
-export default defineType({
+export const teamSchema: SchemaTypeDefinition = {
   name: 'team',
   title: 'Team',
   type: 'document',
@@ -63,4 +63,4 @@ export default defineType({
       ],
     },
   ],
-});
+};

@@ -1,6 +1,6 @@
-import { defineField, defineType } from 'sanity';
+import { SchemaTypeDefinition } from 'sanity';
 
-export default defineType({
+export const gallerySchema: SchemaTypeDefinition = {
   name: 'gallery',
   title: 'Gallery',
   type: 'document',
@@ -32,4 +32,4 @@ export default defineType({
       },
     },
   ],
-});
+};

@@ -1,6 +1,6 @@
-import { defineField, defineType } from 'sanity';
+import { SchemaTypeDefinition } from 'sanity';
   
-export default defineType({
+export const eventsSchema: SchemaTypeDefinition = {
   name: 'event',
   title: 'Event',
   type: 'document',
@@ -59,4 +59,4 @@ export default defineType({
       type: 'datetime',
     },
   ],
-});
+};
