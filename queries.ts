@@ -1,16 +1,12 @@
-// queries.ts
 
-import { groq } from 'next-sanity';
+import {  } from 'next-sanity';
 
-// query for fetching a single document
-export const fetchFirstDocument = groq`
+export const FirstDocumentquery = `
   *[0]
 `;
 
-// query for fetching events
-export const fetchEvents = groq`
+export const Eventsquery = `
   *[_type == "event"] {
-    
     name,
     title,
     "slug":slug.current,
@@ -19,30 +15,31 @@ export const fetchEvents = groq`
     description
   }
 `;
+export const Eventquery = `
+  *[_type == "event" && slug.current == $slug] {
+    name,
+    title,
+    "slug": slug.current,
+    gallery,
+    "imageUrl": gallery[0].asset->url,
+    description
+  }[0]
+`;
 
-// query for fetching team members
-export const fetchTeamMembers = groq`
+
+export const TeamMembersquery = `
   *[_type == "team"] {
     
     name,
     designation,
     category,
     image,
+    "imageUrl": gallery[0].asset->url,
     socials[]->
   }
 `;
 
-// query for fetching categories
-export const fetchCategories = groq`
-  *[_type == "category"] {
-    
-    title,
-    description
-  }
-`;
-
-//query for finding documents with a specific term in their content
-export const findDocumentsByTerm = (term: string) => groq`
+export const findDocumentsByTerm = (term: string) => `
   *[_type == "event" || _type == "team" || _type == "category"][score(content, ${term}) > 0] {
     
     _type,
@@ -50,9 +47,8 @@ export const findDocumentsByTerm = (term: string) => groq`
     score
   }
 `;
-// query for fetching paginated events
 export const fetchPaginatedEvents = (page: number, pageSize: number, term?: string) => {
-  let query = groq`
+  let query = `
     {
       "total": count(*[_type == "event"]),
       "events": *[_type == "event"][${(page - 1) * pageSize}...${page * pageSize - 1}] | order(publishedAt desc) {
